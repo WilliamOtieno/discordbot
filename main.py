@@ -6,7 +6,7 @@ import discord
 import os
 
 bot = commands.Bot(command_prefix="/")
-status = cycle(['GTA V', 'Chess'])
+status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
 
 @bot.event
