@@ -28,8 +28,8 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Please pass in all required arguments.")
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Invalid command used.")
 
 
 @bot.command(aliases=["8ball", "ask"])
@@ -94,6 +94,12 @@ async def reload(extension):
 @tasks.loop(minutes=10)
 async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
+
+
+@clear.error
+async def clear_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Please specify amount of messages to delete.")
 
 
 for file in os.listdir("./cogs"):
