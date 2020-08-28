@@ -176,6 +176,8 @@ async def change_prefix(ctx, prefix):
         json.dump(prefixes, f, indent=4)
         f.close()
 
+    await ctx.send(f"Prefix changed to {prefix}")
+
 
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
