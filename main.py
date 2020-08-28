@@ -85,7 +85,7 @@ async def reload(extension):
     bot.load_extension(f"cogs.{extension}")
 
 
-@tasks.loop(seconds=10)
+@tasks.loop(minutes=10)
 async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
 
