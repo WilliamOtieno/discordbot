@@ -1,14 +1,17 @@
-from discord.ext import commands
+from discord.ext import commands, tasks
+from itertools import cycle
 import secrets
 import random
 import discord
 import os
 
 bot = commands.Bot(command_prefix="/")
+status = cycle(['GTA V', 'Chess'])
 
 
 @bot.event
 async def on_ready():
+    change_status.start()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("Something nice"))
     print("Samaritan online")
 
@@ -67,19 +70,24 @@ async def unban(ctx, *, member):
 
 
 @bot.command()
-async def load(ctx, extension):
+async def load(extension):
     bot.load_extension(f"cogs.{extension}")
 
 
 @bot.command()
-async def unload(ctx, extension):
+async def unload(extension):
     bot.unload_extension(f"cogs.{extension}")
 
 
 @bot.command()
-async def reload(ctx, extension):
+async def reload(extension):
     bot.unload_extension(f"cogs.{extension}")
     bot.load_extension(f"cogs.{extension}")
+
+
+@tasks.loop(seconds=10)
+async def change_status():
+    await bot.change_presence(activity=discord.Game(next(status)))
 
 
 for file in os.listdir("./cogs"):
