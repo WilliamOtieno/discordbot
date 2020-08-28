@@ -8,32 +8,33 @@ import os
 bot = commands.Bot(command_prefix="/")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
-
+# Bot coming online
 @bot.event
 async def on_ready():
     change_status.start()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("Something nice"))
     print("Samaritan online")
 
-
+# When someone joins
 @bot.event
 async def on_member_join(member):
     print(f'{member} has joined the server.')
 
 
-
+# When member leaves
 @bot.event
 async def on_member_remove(member):
     print(f'{member} has left the server.')
 
 
-
+# When wrong command is used
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Invalid command used.")
 
 
+# Random answer to question
 @bot.command(aliases=["8ball", "ask"])
 async def _8ball(ctx, *, question):
     responses = [
@@ -46,24 +47,28 @@ async def _8ball(ctx, *, question):
     await ctx.send(f"Question: {question}\nAnswer: {random.choice(responses)}")
 
 
+# Clear messages
 @bot.command()
 async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     print(f"Cleared {amount} messages")
 
 
+# Kick user
 @bot.command()
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f"Kicked {member.mention}")
 
 
+# Ban user
 @bot.command()
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f"Banned {member.mention}")
 
 
+# Unban user
 @bot.command()
 async def unban(ctx, *, member):
     banned_users = await ctx.guild.bans()
@@ -77,27 +82,32 @@ async def unban(ctx, *, member):
             return
 
 
+# Load cogs
 @bot.command()
 async def load(extension):
     bot.load_extension(f"cogs.{extension}")
 
 
+# Unload cogs
 @bot.command()
 async def unload(extension):
     bot.unload_extension(f"cogs.{extension}")
 
 
+# Reload cogs
 @bot.command()
 async def reload(extension):
     bot.unload_extension(f"cogs.{extension}")
     bot.load_extension(f"cogs.{extension}")
 
 
+# Loop a task
 @tasks.loop(minutes=10)
 async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
 
 
+# Handle exception
 @clear.error
 async def clear_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
