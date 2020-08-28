@@ -8,7 +8,7 @@ bot = commands.Bot(command_prefix="/")
 
 @bot.event
 async def on_ready():
-    print("I am alive.")
+    print("I am alive and online.")
 
 
 @bot.event
