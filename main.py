@@ -26,6 +26,12 @@ async def on_member_remove(member):
     print(f'{member} has left the server.')
 
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Please pass in all required arguments.")
+
+
 @bot.command(aliases=["8ball", "ask"])
 async def _8ball(ctx, *, question):
     responses = [
@@ -39,7 +45,7 @@ async def _8ball(ctx, *, question):
 
 
 @bot.command()
-async def clear(ctx, amount=5):
+async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     print(f"Cleared {amount} messages")
 
