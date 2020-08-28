@@ -4,8 +4,17 @@ import secrets
 import random
 import discord
 import os
+import json
 
-bot = commands.Bot(command_prefix="/")
+
+def get_prefix(bot, message):
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+
+    return prefixes[str(message.guild.id)]
+
+
+bot = commands.Bot(command_prefix=get_prefix)
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
 
@@ -127,6 +136,45 @@ def is_it_me(ctx):
 @commands.check(is_it_me)
 async def example(ctx):
     await ctx.send(f"Hi I'm {ctx.author}.")
+
+
+@bot.event
+async def on_guild_join(guild):
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+        f.close()
+
+    prefixes[str(guild.id)] = "/"
+
+    with open("prefixes.json", "w") as f:
+        json.dump(prefixes, f, indent=4)
+        f.close()
+
+
+@bot.event
+async def on_guild_remove(guild):
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+        f.close()
+
+    prefixes.pop(str(guild.id))
+
+    with open("prefixes.json", "w") as f:
+        json.dump(prefixes, f, indent=4)
+        f.close()
+
+
+@bot.command()
+async def change_prefix(ctx, prefix):
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+        f.close()
+
+    prefixes[str(ctx.guild.id)] = prefix
+
+    with open("prefixes.json", "w") as f:
+        json.dump(prefixes, f, indent=4)
+        f.close()
 
 
 for file in os.listdir("./cogs"):
