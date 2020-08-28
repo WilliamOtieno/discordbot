@@ -70,6 +70,12 @@ async def unload(ctx, extension):
     bot.unload_extension(f"cogs.{extension}")
 
 
+@bot.command()
+async def reload(ctx, extension):
+    bot.unload_extension(f"cogs.{extension}")
+    bot.load_extension(f"cogs.{extension}")
+
+
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
         bot.load_extension(f"cogs.{file[:-3]}")
