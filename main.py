@@ -12,9 +12,8 @@ async def on_ready():
 
 
 @bot.event
-async def on_member_join(member, ctx):
+async def on_member_join(member):
     print(f'{member} has joined the server.')
-    await ctx.send(f"Welcome {member}")
 
 
 @bot.event
