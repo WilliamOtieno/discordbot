@@ -119,6 +119,16 @@ async def clear_error(ctx, error):
         await ctx.send("You are not my master.")
 
 
+def is_it_me(ctx):
+    return ctx.author.id == 693701426953584691
+
+
+@bot.command()
+@commands.check(is_it_me)
+async def example(ctx):
+    await ctx.send(f"Hi I'm {ctx.author}.")
+
+
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
         bot.load_extension(f"cogs.{file[:-3]}")
