@@ -69,4 +69,5 @@ async def unban(ctx, *, member):
             return
 
 
-bot.run(secrets.token)
+if __name__ == '__main__':
+    bot.run(secrets.token)
