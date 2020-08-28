@@ -8,11 +8,6 @@ bot = commands.Bot(command_prefix="/")
 
 
 @bot.event
-async def on_ready():
-    print("I am alive and online.")
-
-
-@bot.event
 async def on_member_join(member):
     print(f'{member} has joined the server.')
 
@@ -20,11 +15,6 @@ async def on_member_join(member):
 @bot.event
 async def on_member_remove(member):
     print(f'{member} has left the server.')
-
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send(f"Pong! {round(bot.latency * 1000)} ms")
 
 
 @bot.command(aliases=["8ball", "ask"])
@@ -78,6 +68,7 @@ async def load(ctx, extension):
 @bot.command()
 async def unload(ctx, extension):
     bot.unload_extension(f"cogs.{extension}")
+
 
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
