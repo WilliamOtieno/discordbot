@@ -17,13 +17,15 @@ async def on_ready():
 
 
 @bot.event
-async def on_member_join(member):
+async def on_member_join(ctx, member):
     print(f'{member} has joined the server.')
+    await ctx.send(f"Welcome {member}")
 
 
 @bot.event
-async def on_member_remove(member):
+async def on_member_remove(ctx, member):
     print(f'{member} has left the server.')
+    await ctx.send(f"{member} is no longer with us.")
 
 
 @bot.event
