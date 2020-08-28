@@ -8,12 +8,14 @@ import os
 bot = commands.Bot(command_prefix="/")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
+
 # Bot coming online
 @bot.event
 async def on_ready():
     change_status.start()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("Something nice"))
     print("Samaritan online")
+
 
 # When someone joins
 @bot.event
@@ -49,6 +51,7 @@ async def _8ball(ctx, *, question):
 
 # Clear messages
 @bot.command()
+@commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
     print(f"Cleared {amount} messages")
@@ -112,6 +115,8 @@ async def change_status():
 async def clear_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Please specify amount of messages to delete.")
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send("You are not my master.")
 
 
 for file in os.listdir("./cogs"):
