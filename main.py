@@ -2,6 +2,7 @@ from discord.ext import commands
 import secrets
 import random
 import discord
+import os
 
 bot = commands.Bot(command_prefix="/")
 
@@ -68,6 +69,19 @@ async def unban(ctx, *, member):
             await ctx.send(f"Unbanned {user.mention}")
             return
 
+
+@bot.command()
+async def load(ctx, extension):
+    bot.load_extension(f"cogs.{extension}")
+
+
+@bot.command()
+async def unload(ctx, extension):
+    bot.unload_extension(f"cogs.{extension}")
+
+for file in os.listdir("./cogs"):
+    if file.endswith(".py"):
+        bot.load_extension(f"cogs.{file[:-3]}")
 
 if __name__ == '__main__':
     bot.run(secrets.token)
