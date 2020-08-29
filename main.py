@@ -4,7 +4,7 @@ import secrets
 import random
 import discord
 import os
-import json
+import time
 
 """
 def get_prefix(bot, message):
@@ -16,11 +16,6 @@ def get_prefix(bot, message):
 
 bot = commands.Bot(command_prefix="/")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
-
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
 
 
 # Bot coming online
@@ -68,11 +63,14 @@ async def _8ball(ctx, *, question):
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount)
+    time.sleep(2)
+    await ctx.send(f"Cleared {amount} messages.")
     print(f"Cleared {amount} messages")
 
 
 # Kick user
 @bot.command()
+@commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f"Kicked {member.mention}")
@@ -80,6 +78,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 
 # Ban user
 @bot.command()
+@commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f"Banned {member.mention}")
@@ -133,14 +132,22 @@ async def clear_error(ctx, error):
         await ctx.send("You are not my master.")
 
 
+"""
+async def admin_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("I only answer to my master")
+"""
+
+
 def is_it_me(ctx):
     return ctx.author.id == 693701426953584691
 
 
 @bot.command()
 @commands.check(is_it_me)
-async def example(ctx):
-    await ctx.send(f"Hi I'm {ctx.author}.")
+async def testing(ctx):
+    await ctx.send(f"Hi I'm Samaritan.")
+
 
 """
 @bot.event
