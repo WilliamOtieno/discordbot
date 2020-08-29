@@ -17,6 +17,11 @@ def get_prefix(bot, message):
 bot = commands.Bot(command_prefix="/")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
 
 # Bot coming online
 @bot.event
