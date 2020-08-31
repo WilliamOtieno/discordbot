@@ -18,12 +18,29 @@ bot = commands.Bot(command_prefix="/")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
 
-# Bot coming online
+# Bot successfully connecting to Dicord
+@bot.event
+async def on_connect():
+    print("Samaritan online.")
+
+
+# Bot disconnecting from Discord
+@bot.event
+async def on_disconnect():
+    print("Samaritan offline.")
+
+
+# Bot becoming ready to perform its functions
 @bot.event
 async def on_ready():
     change_status.start()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("Something nice"))
-    print("Samaritan online")
+    print("I am alive.")
+
+
+@bot.event
+async def on_error():
+    print("I am experiencing issues, please check me out.")
 
 
 # When someone joins
@@ -199,7 +216,6 @@ async def on_message(message):
     elif message.content.lower().startswith("hello"):
         await message.channel.send("Hello, I'm Samaritan")
 """
-
 
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
