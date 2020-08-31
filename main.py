@@ -42,9 +42,11 @@ async def on_member_remove(member):
 async def on_message(message):
     message.lower()
     if message.author == bot.user:
-        return
+        await message.channel.send("Sth")
     if message.content.startswith("hello"):
         await message.channel.send("Hello, I'm Samaritan")
+
+
 
 # When wrong command is used
 @bot.event
