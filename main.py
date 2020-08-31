@@ -38,6 +38,14 @@ async def on_member_remove(member):
     print(f'{member} has left the server.')
 
 
+@bot.event
+async def on_message(message):
+    message.lower()
+    if message.author == bot.user:
+        return
+    if message.content.startswith("hello"):
+        await message.channel.send("Hello, I'm Samaritan")
+
 # When wrong command is used
 @bot.event
 async def on_command_error(ctx, error):
@@ -145,7 +153,7 @@ def is_it_me(ctx):
 
 @bot.command()
 @commands.check(is_it_me)
-async def testing(ctx):
+async def greetings(ctx):
     await ctx.send(f"Hi I'm Samaritan.")
 
 
