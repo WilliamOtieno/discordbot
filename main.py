@@ -29,27 +29,17 @@ async def on_ready():
 # When someone joins
 @bot.event
 async def on_member_join(member):
+    channel = discord.utils.get(member.guild.channels, name="general")
     print(f'{member} has joined the server.')
+    await channel.send(f"Welcome, {member}.")
 
 
 # When member leaves
 @bot.event
 async def on_member_remove(member):
+    channel = discord.utils.get(member.guild.channels, name="general")
     print(f'{member} has left the server.')
-
-
-@bot.event
-async def on_message(message):
-    message.lower()
-    if message.author == bot.user:
-        await message.channel.send("Sth")
-    elif message.content.startswith("hello"):
-        await message.channel.send("Hello, I'm Samaritan")
-    elif message.author ==  "TheVeteranChild#0175":
-        await message.channel.send("Hey")
-    else:
-        await message.channel.send("Yoh")
-
+    await channel.send(f"{member} has left us.")
 
 
 # When wrong command is used
@@ -200,6 +190,16 @@ async def change_prefix(ctx, prefix):
 
     await ctx.send(f"Prefix changed to {prefix}")
 """
+
+"""
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    elif message.content.lower().startswith("hello"):
+        await message.channel.send("Hello, I'm Samaritan")
+"""
+
 
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
