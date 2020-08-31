@@ -65,6 +65,7 @@ async def on_member_remove(member):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Invalid command used.")
+        print("Invalid command used")
 
 
 # Random answer to question
@@ -96,6 +97,7 @@ async def clear(ctx, amount: int):
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f"Kicked {member.mention}")
+    print(f"Kicked {member}")
 
 
 # Ban user
@@ -104,6 +106,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f"Banned {member.mention}")
+    print(f"Banned {member}")
 
 
 # Unban user
