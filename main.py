@@ -43,8 +43,12 @@ async def on_message(message):
     message.lower()
     if message.author == bot.user:
         await message.channel.send("Sth")
-    if message.content.startswith("hello"):
+    elif message.content.startswith("hello"):
         await message.channel.send("Hello, I'm Samaritan")
+    elif message.author ==  "TheVeteranChild#0175":
+        await message.channel.send("Hey")
+    else:
+        await message.channel.send("Yoh")
 
 
 
