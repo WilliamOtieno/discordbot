@@ -14,7 +14,7 @@ def get_prefix(bot, message):
     return prefixes[str(message.guild.id)]
 """
 
-bot = commands.Bot(command_prefix="/")
+bot = commands.Bot(command_prefix=".")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
 
 
