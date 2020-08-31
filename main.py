@@ -38,6 +38,7 @@ async def on_ready():
     print("I am alive.")
 
 
+# If any errors are experienced
 @bot.event
 async def on_error():
     print("I am experiencing issues, please check me out.")
