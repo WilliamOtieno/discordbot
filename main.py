@@ -5,6 +5,7 @@ import random
 import discord
 import os
 import time
+import requests
 
 """
 def get_prefix(bot, message):
@@ -89,6 +90,18 @@ async def clear(ctx, amount: int):
     time.sleep(2)
     await ctx.send(f"Cleared {amount} messages.")
     print(f"Cleared {amount} messages")
+
+
+# Dictionary function
+@bot.command()
+async def dictionary(ctx):
+    content = requests.get(f"https://api.dictionaryapi.dev/api/v1/entries/en/{ctx}").json()
+    try:
+        noun_def = content[0]["meaning"]["noun"][0]["definition"]
+        await ctx.send(noun_def)
+        time.sleep(0.5)
+    except KeyError:
+        pass
 
 
 # Kick user
