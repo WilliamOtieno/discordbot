@@ -95,8 +95,8 @@ async def clear(ctx, amount: int):
 # Dictionary function
 @bot.command()
 async def dictionary(ctx):
-    print(ctx)
-    content = requests.get(f"https://api.dictionaryapi.dev/api/v1/entries/en/{ctx}").json()
+    word = ' '.join(ctx.args)
+    content = requests.get(f"https://api.dictionaryapi.dev/api/v1/entries/en/{word}").json()
     print(content)
     try:
         noun_def = content[0]["meaning"]["noun"][0]["definition"]
