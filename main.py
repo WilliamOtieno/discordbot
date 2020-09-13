@@ -96,6 +96,7 @@ async def clear(ctx, amount: int):
 @bot.command()
 async def dictionary(ctx):
     word = ' '.join(ctx.args)
+    print(word)
     content = requests.get(f"https://api.dictionaryapi.dev/api/v1/entries/en/{word}").json()
     print(content)
     try:
