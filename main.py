@@ -5,7 +5,8 @@ import random
 import discord
 import os
 import time
-
+import requests
+import json
 
 """
 def get_prefix(bot, message):
@@ -17,9 +18,25 @@ def get_prefix(bot, message):
 
 bot = commands.Bot(command_prefix=".")
 status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
+sad_words = ["sad", "depressed", "unhappy", "angry", "grave", "hard", "lonely", "sorry", "upset", "troubled", "demise",
+             "disappointed", "death", "obituary", "disaster", "funeral", "gloomy", "sombre", "dismal", "rejected",
+             "gloomy", "unhappy", "miserable", "angry"]
+starter_encouragements = [
+    "Cheer up! ",
+    "Hang in there. ",
+    "You're a great person. ",
+    "Don't worry. "
+]
 
 
-# Bot successfully connecting to Dicord
+def get_quote():
+    response = requests.get('https://zenquotes.io/api/random')
+    json_data = json.loads(response.text)
+    quote = json_data[0]['q']
+    return quote
+
+
+# Bot successfully connecting to Discord
 @bot.event
 async def on_connect():
     print("Samaritan online.")
