@@ -8,24 +8,17 @@ import time
 import requests
 import json
 
-"""
-def get_prefix(bot, message):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
-
-    return prefixes[str(message.guild.id)]
-"""
-
 bot = commands.Bot(command_prefix=".")
-status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft'])
+status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft', 'Call of Duty'])
 sad_words = ["sad", "depressed", "unhappy", "angry", "grave", "hard", "lonely", "sorry", "upset", "troubled", "demise",
              "disappointed", "death", "obituary", "disaster", "funeral", "gloomy", "sombre", "dismal", "rejected",
-             "gloomy", "unhappy", "miserable", "angry"]
+             "gloomy", "unhappy", "miserable", "angry", "suicide", "suicidal", "kill"]
 starter_encouragements = [
     "Cheer up! ",
     "Hang in there. ",
     "You're a great person. ",
-    "Don't worry. "
+    "Don't worry. ",
+    "You're only human."
 ]
 
 
@@ -54,6 +47,19 @@ async def on_ready():
     change_status.start()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("Something nice"))
     print("I am alive.")
+
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    msg = message.content
+    if any(word in msg for word in sad_words):
+        quote = get_quote()
+        await message.channel.send(random.choice(starter_encouragements))
+        time.sleep(2)
+        await message.channel.send(quote)
 
 
 # If any errors are experienced
@@ -210,53 +216,6 @@ def is_it_me(ctx):
 async def greetings(ctx):
     await ctx.send(f"Hi I'm Samaritan.")
 
-
-"""
-@bot.event
-async def on_guild_join(guild):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
-
-    prefixes[str(guild.id)] = "/"
-
-    with open("prefixes.json", "w") as f:
-        json.dump(prefixes, f, indent=4)
-
-
-@bot.event
-async def on_guild_remove(guild):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
-
-    prefixes.pop(str(guild.id))
-
-    with open("prefixes.json", "w") as f:
-        json.dump(prefixes, f, indent=4)
-
-
-@bot.command()
-async def change_prefix(ctx, prefix):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
-        f.close()
-
-    prefixes[str(ctx.guild.id)] = prefix
-
-    with open("prefixes.json", "w") as f:
-        json.dump(prefixes, f, indent=4)
-        f.close()
-
-    await ctx.send(f"Prefix changed to {prefix}")
-"""
-
-"""
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    elif message.content.lower().startswith("hello"):
-        await message.channel.send("Hello, I'm Samaritan")
-"""
 
 for file in os.listdir("./cogs"):
     if file.endswith(".py"):
