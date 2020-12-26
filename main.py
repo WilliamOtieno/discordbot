@@ -9,7 +9,7 @@ import requests
 import json
 
 bot = commands.Bot(command_prefix=".")
-status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft', 'Call of Duty'])
+status = cycle(['GTA V', 'Chess', 'Checkers', 'Minecraft', 'Call of Duty', 'Fortnite'])
 sad_words = ["sad", "depressed", "unhappy", "angry", "grave", "hard", "lonely", "sorry", "upset", "troubled", "demise",
              "disappointed", "death", "obituary", "disaster", "funeral", "gloomy", "sombre", "dismal", "rejected",
              "gloomy", "unhappy", "miserable", "angry", "suicide", "suicidal", "kill"]
@@ -92,18 +92,6 @@ async def on_command_error(ctx, error):
         print("Invalid command used")
 
 
-# Random answer to question
-@bot.command(aliases=["8ball", "ask"])
-async def _8ball(ctx, *, question):
-    responses = [
-        "It is certain",
-        "I'm not sure",
-        "Dont count on it",
-        "My reply is no",
-        "My sources say no"
-    ]
-    await ctx.send(f"Question: {question}\nAnswer: {random.choice(responses)}")
-
 
 # Clear messages
 @bot.command()
@@ -113,25 +101,6 @@ async def clear(ctx, amount: int):
     time.sleep(2)
     await ctx.send(f"Cleared {amount} messages.")
     print(f"Cleared {amount} messages")
-
-
-""" # Dictionary function
-@bot.command()
-async def dictionary(ctx):
-    word = ctx.message.text
-    print(word)
-    content = requests.get(f"https://api.dictionaryapi.dev/api/v1/entries/en/{word}").json()
-    print(content)
-    try:
-        noun_def = content[0]["meaning"]["noun"][0]["definition"]
-        print(noun_def)
-        await ctx.send(str(noun_def))
-        print("dict")
-        time.sleep(0.5)
-    except KeyError:
-        print("oops")
-        pass
-"""
 
 
 # Kick user
@@ -200,11 +169,9 @@ async def clear_error(ctx, error):
         await ctx.send("You are not my master.")
 
 
-"""
 async def admin_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("I only answer to my master")
-"""
 
 
 def is_it_me(ctx):
