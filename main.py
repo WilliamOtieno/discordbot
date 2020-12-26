@@ -3,7 +3,6 @@ from itertools import cycle
 import secrets
 import random
 import discord
-import os
 import time
 import requests
 import json
@@ -90,7 +89,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Invalid command used.")
         print("Invalid command used")
-
 
 
 # Clear messages
@@ -183,10 +181,6 @@ def is_it_me(ctx):
 async def greetings(ctx):
     await ctx.send(f"Hi I'm Samaritan.")
 
-
-for file in os.listdir("./cogs"):
-    if file.endswith(".py"):
-        bot.load_extension(f"cogs.{file[:-3]}")
 
 if __name__ == '__main__':
     bot.run(secrets.token)
