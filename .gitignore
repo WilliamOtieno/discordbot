@@ -2,3 +2,4 @@
 cordenv/
 __pycache__/
 venv/
+secrets.py
